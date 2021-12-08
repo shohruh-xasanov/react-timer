@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App" style={{backgroundColor: `rgb(${r}, ${g}, ${b})`}}>
-    <h1>Hello world</h1>
+    <h1>Hello World</h1>
       <div className="timer">
          <button onClick={()=>dispatch({type : "INC_R"})}>R+</button>
          <button onClick={()=>dispatch({type : "DIC_R"})}>R-</button>
