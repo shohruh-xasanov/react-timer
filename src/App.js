@@ -1,64 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { useReducer } from 'react';
 import './App.css';
+import reducer from './reducer';
 
 function App() {
 
-  const [counter, setCounter] = useState(0)
-  const [count, setCount] = useState(false)
-  const userRef = useRef(0)
-
-  const startTimer = () => {
-    setCount(!count)
-    
-  }
-  const stopTimer = () => {
-    clearInterval(userRef.current)
-    localStorage.setItem('count', counter)
-    setCount(!count)
-  }
-  const resetTimer = () => {
-    setCount(false)
-    setCounter(0)
-  }
-  useEffect (()=>{
-    setCounter( +localStorage.getItem('count'))
-  }, [])
-
-  useEffect (()=>{
-    localStorage.setItem('count', counter)
-  }, [counter])
-
-  useEffect (()=>{
-    if(count){
-      userRef.current = setInterval (()=>{
-        setCounter(prev=>prev + 1)
-      }, 1000)
-    }
-    return ()=>{
-      userRef.current && clearInterval(userRef.current)
-      userRef.current =0
-    }
-  }, [count])
+    const [{ r, g, b}, dispatch] = useReducer(reducer, {
+      r : 100,
+      g : 100,
+      b : 100
+    })
 
   return (
-    <div className="App">
-    <h1>Timer : {counter}</h1>
+    <div className="App" style={{backgroundColor: `rgb(${r}, ${g}, ${b})`}}>
+    <h1>Hello world</h1>
       <div className="timer">
-          {
-            !count ? 
-            <button
-            style={{background: 'blue'}}
-            onClick={startTimer}
-            >Start</button> : 
-            <button
-            style={{background: 'red'}}
-            onClick={stopTimer}
-            >Stop</button>
-          }
-          <button
-            style={{background: 'green'}}
-          onClick={resetTimer}
-          >Reset</button>
+         <button onClick={()=>dispatch({type : "INC_R"})}>R+</button>
+         <button onClick={()=>dispatch({type : "DIC_R"})}>R-</button>
+         <button onClick={()=>dispatch({type : "INC_G"})}>G+</button>
+         <button onClick={()=>dispatch({type : "DIC_G"})}>G-</button>
+         <button onClick={()=>dispatch({type : "INC_B"})}>B+</button>
+         <button onClick={()=>dispatch({type : "DIC_B"})}>B-</button>
       </div>
     </div>
   );

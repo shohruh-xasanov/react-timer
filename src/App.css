@@ -27,7 +27,6 @@ body
 }
 .timer button
 {
-  margin: 0 40px;
   width: 130px;
   padding: 10px;
   cursor: pointer;
