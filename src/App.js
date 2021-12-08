@@ -1,25 +1,20 @@
-import { useReducer } from 'react';
+
 import './App.css';
-import reducer from './reducer';
+import useLocalStorage from './hooks/useLocalStorage';
+import usePrevious from './hooks/usePrevious';
 
 function App() {
 
-    const [{ r, g, b}, dispatch] = useReducer(reducer, {
-      r : 100,
-      g : 100,
-      b : 100
-    })
+  const [count, setCount] = useLocalStorage(0, "count") // 1ga o'zgardi
+  const previous = usePrevious(count) // 1ga o'zgardi
 
   return (
-    <div className="App" style={{backgroundColor: `rgb(${r}, ${g}, ${b})`}}>
-    <h1>Hello World</h1>
+    <div className="App" >
+    <h1>Hello world: {count}</h1>
+    <h1>Previous Hello world: {previous}</h1>
       <div className="timer">
-         <button onClick={()=>dispatch({type : "INC_R"})}>R+</button>
-         <button onClick={()=>dispatch({type : "DIC_R"})}>R-</button>
-         <button onClick={()=>dispatch({type : "INC_G"})}>G+</button>
-         <button onClick={()=>dispatch({type : "DIC_G"})}>G-</button>
-         <button onClick={()=>dispatch({type : "INC_B"})}>B+</button>
-         <button onClick={()=>dispatch({type : "DIC_B"})}>B-</button>
+         <button onClick={()=> setCount(prev=> prev +1)}>Incriment+</button>
+         <button onClick={()=> setCount(prev=> prev -1)}>Decriment-</button>
       </div>
     </div>
   );
